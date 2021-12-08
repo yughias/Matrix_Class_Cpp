@@ -11,7 +11,7 @@ Matrix::Matrix(int r, int c) {
 Matrix::Matrix(type val){
     row = 1;
     col = 1;
-    matrix = new type[1];
+    matrix = new type[1];a
     matrix[0] = val;
 }
 
