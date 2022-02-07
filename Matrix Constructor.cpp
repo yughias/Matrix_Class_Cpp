@@ -1,21 +1,24 @@
 #include "Matrix.h"
 
-Matrix::Matrix(){};
+template <class type>
+Matrix<type>::Matrix(){};
 
-Matrix::Matrix(int r, int c) {
+template <class type>
+Matrix<type>::Matrix(int r, int c) {
     row = r;
     col = c;
     matrix = new type[row*col];
 }
 
-Matrix::Matrix(type val){
+template <class type>
+Matrix<type>::Matrix(type val){
     row = 1;
     col = 1;
     matrix = new type[1];
     matrix[0] = val;
 }
-
-Matrix::Matrix(int r, int c, const type* mat){
+template <class type>
+Matrix<type>::Matrix(int r, int c, const type* mat){
     row = r;
     col = c;
     matrix = new type[row*col];
@@ -24,7 +27,8 @@ Matrix::Matrix(int r, int c, const type* mat){
 }
 
 //copy constructor
-Matrix::Matrix(const Matrix& mat) {
+template <class type>
+Matrix<type>::Matrix(const Matrix& mat) {
     row = mat.row;
     col = mat.col;
     matrix = new type[row*col];
@@ -32,7 +36,8 @@ Matrix::Matrix(const Matrix& mat) {
         matrix[i] = mat.matrix[i];
 }
 
-Matrix::~Matrix(){
+template <class type>
+Matrix<type>::~Matrix(){
     delete[] matrix;
 }
 

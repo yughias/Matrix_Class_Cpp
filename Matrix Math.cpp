@@ -1,12 +1,15 @@
 #include "Matrix.h"
 #include <cmath>
 
-void Matrix::init(int val){
+template <class type>
+
+void Matrix<type>::init(int val){
     for(int i = 0; i < row*col; i++)
         matrix[i] = val;
 }
 
-Matrix& Matrix::transposed() {
+template <class type>
+Matrix<type>& Matrix<type>::transposed() {
     int tmp = 0;
     type* mat = new type[row*col];
     for(int i = 0; i < row; i++)
@@ -23,7 +26,8 @@ Matrix& Matrix::transposed() {
     return *this;
 }
 
-Matrix Matrix::transposed(const Matrix& m){
+template <class type>
+Matrix<type> Matrix<type>::transposed(const Matrix& m){
     Matrix out(m.col, m.row);
     int tmp = 0;
     for(int i = 0; i < m.row; i++)
@@ -34,14 +38,16 @@ Matrix Matrix::transposed(const Matrix& m){
     return out;
 }
 
-Matrix Matrix::round(const Matrix& m){
+template <class type>
+Matrix<type> Matrix<type>::round(const Matrix& m){
     Matrix out(m.row, m.col);
     for(int i = 0; i < m.row*m.col; i++)
         out.matrix[i] = int(m.matrix[i]+0.5);
     return out;
 }
 
-Matrix Matrix::subMatrix(int r, int c, const Matrix & m) {
+template <class type>
+Matrix<type> Matrix<type>::subMatrix(int r, int c, const Matrix & m) {
     Matrix out(m.row-1, m.col-1);
     for(int i = 0; i < m.row; i++)
         for(int j = 0; j < m.col; j++){
@@ -56,7 +62,8 @@ Matrix Matrix::subMatrix(int r, int c, const Matrix & m) {
     return out;
 }
 
-type Matrix::det() {
+template <class type>
+type Matrix<type>::det() {
     if(this->row == 1 && this->col == 1)
         return this->matrix[0];
     if(this->row == 2 && this->col == 2)
@@ -69,7 +76,8 @@ type Matrix::det() {
     return det;
 }
 
-Matrix Matrix::dot(const Matrix& m1, const Matrix& m2) {
+template <class type>
+Matrix<type> Matrix<type>::dot(const Matrix& m1, const Matrix& m2) {
     if(m1.col != m2.row) {
         return m1;
     }
@@ -88,7 +96,8 @@ Matrix Matrix::dot(const Matrix& m1, const Matrix& m2) {
     return out;
 }
 
-Matrix Matrix::coeff(const Matrix& m){
+template <class type>
+Matrix<type> Matrix<type>::coeff(const Matrix& m){
     Matrix out(m.row, m.col);
     for(int i = 0; i < out.row; i++)
         for(int j = 0; j < out.col; j++){
@@ -97,13 +106,15 @@ Matrix Matrix::coeff(const Matrix& m){
     return out;
 }
 
-Matrix Matrix::inverse(Matrix& m) {
+template <class type>
+Matrix<type> Matrix<type>::inverse(Matrix& m) {
     if(m.row == 1 && m.col == 1)
         return Matrix(1/m[0][0]);
     return transposed(coeff(m))*(1/m.det());
 }
 
-Matrix& Matrix::inverse(){
+template <class type>
+Matrix<type>& Matrix<type>::inverse(){
     if(this->row == 1 && this->col == 1){
         (*this)[0][0] = 1/(*this)[0][0];
         return *this;
@@ -112,7 +123,8 @@ Matrix& Matrix::inverse(){
     return *this;
 }
 
-Matrix& Matrix::swapRows(int r1, int r2, bool printable) {
+template <class type>
+Matrix<type>& Matrix<type>::swapRows(int r1, int r2, bool printable) {
     for(int i = 0; i < col; i++){
         type tmp = (*this)[r1][i];
         (*this)[r1][i] = (*this)[r2][i];
@@ -124,7 +136,8 @@ Matrix& Matrix::swapRows(int r1, int r2, bool printable) {
     return *this;
 }
 
-Matrix& Matrix::gaussMove(int r1, int r2, type a, type b, bool printable) {
+template <class type>
+Matrix<type>& Matrix<type>::gaussMove(int r1, int r2, type a, type b, bool printable) {
     for(int i = 0; i < col; i++){
         (*this)[r1][i] = a*(*this)[r1][i] + b*(*this)[r2][i];
     }
@@ -138,7 +151,8 @@ Matrix& Matrix::gaussMove(int r1, int r2, type a, type b, bool printable) {
     }
 }
 
-Matrix Matrix::gaussReduction(Matrix & m, bool printable) {
+template <class type>
+Matrix<type> Matrix<type>::gaussReduction(Matrix & m, bool printable) {
     Matrix out = m;
     for(int i = 0; i < out.row; i++){
         if(out[i][i] == 0) {
@@ -158,7 +172,8 @@ Matrix Matrix::gaussReduction(Matrix & m, bool printable) {
     return out;
 }
 
-Matrix Matrix::rowEchelonForm(Matrix & m, bool printable) {
+template <class type>
+Matrix<type> Matrix<type>::rowEchelonForm(Matrix & m, bool printable) {
     Matrix out = gaussReduction(m);
     for(int i = out.row-1; i >= 0; i--){
         for(int j = 0; j < out.col; j++){
@@ -177,12 +192,14 @@ Matrix Matrix::rowEchelonForm(Matrix & m, bool printable) {
     return out;
 }
 
-Matrix& Matrix::gaussReduction(bool printable) {
+template <class type>
+Matrix<type>& Matrix<type>::gaussReduction(bool printable) {
     *this = gaussReduction(*this, printable);
     return *this;
 }
 
-Matrix& Matrix::rowEchelonForm(bool printable) {
+template <class type>
+Matrix<type>& Matrix<type>::rowEchelonForm(bool printable) {
     *this = rowEchelonForm(*this, printable);
     return *this;
 }
