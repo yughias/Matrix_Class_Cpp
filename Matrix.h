@@ -8,9 +8,7 @@ private:
     float *matrix;
 
 public:
-    Matrix();
-
-    Matrix(float);
+    Matrix(float val=0);
 
     Matrix(const Matrix &);
 
